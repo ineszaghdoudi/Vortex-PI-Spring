@@ -7,6 +7,7 @@ import pi.vortex.rescuethestray.interfaces.ILearningResourceService;
 import pi.vortex.rescuethestray.repositories.ILearningResourceRepo;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LearningResourceService implements ILearningResourceService {
@@ -20,8 +21,23 @@ public class LearningResourceService implements ILearningResourceService {
     }
 
     @Override
+    public Optional<LearningResource> retrieveLearningResource(Long idLearningResource) {
+        return iLearningResourceRepo.findById(idLearningResource);
+    }
+
+    @Override
     public LearningResource addLearningResource(LearningResource learningResource)
     {
         return iLearningResourceRepo.save(learningResource);
+    }
+
+    @Override
+    public LearningResource updateLearningResource(LearningResource learningResource) {
+        return iLearningResourceRepo.save(learningResource);
+    }
+
+    public void removeLearningResource(Long idLearningResource) {
+
+        iLearningResourceRepo.deleteById(idLearningResource);
     }
 }
