@@ -51,6 +51,7 @@ public class LearningResourceController {
     }
 
 
+
     @GetMapping("/learning-resource-type-stats")
     public ResponseEntity<List<Map<String, Object>>> statsResourcesByType() {
         List<LearningResource> resources = iLearningResourceRepo.findAll();
