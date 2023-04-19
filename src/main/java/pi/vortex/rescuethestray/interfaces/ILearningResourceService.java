@@ -1,8 +1,11 @@
 package pi.vortex.rescuethestray.interfaces;
 
+
 import pi.vortex.rescuethestray.entities.LearningResource;
+import pi.vortex.rescuethestray.entities.TypeResource;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface ILearningResourceService {
@@ -15,5 +18,7 @@ public interface ILearningResourceService {
     LearningResource updateLearningResource(LearningResource learningResource);
 
     void removeLearningResource(Long idLearningResource);
+
+    Map<TypeResource, Long> statsResourcesByType();
 
 }
