@@ -42,4 +42,5 @@ public class LearningResourceController {
     public void removeLearningResource(@PathVariable("learning_resource-id") Long id_learningr) {
         iLearningResourceService.removeLearningResource(id_learningr);
     }
+
 }
