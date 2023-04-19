@@ -3,11 +3,15 @@ package pi.vortex.rescuethestray.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pi.vortex.rescuethestray.entities.LearningResource;
+import pi.vortex.rescuethestray.entities.TypeResource;
 import pi.vortex.rescuethestray.interfaces.ILearningResourceService;
 import pi.vortex.rescuethestray.repositories.ILearningResourceRepo;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class LearningResourceService implements ILearningResourceService {
@@ -39,5 +43,12 @@ public class LearningResourceService implements ILearningResourceService {
     public void removeLearningResource(Long idLearningResource) {
 
         iLearningResourceRepo.deleteById(idLearningResource);
+    }
+
+    public Map<TypeResource, Long> statsResourcesByType() {
+        List<LearningResource> resources = iLearningResourceRepo.findAll();
+        return resources.stream()
+                .map(LearningResource::getType_learningr)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
     }
 }

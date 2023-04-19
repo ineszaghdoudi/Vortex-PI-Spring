@@ -6,4 +6,5 @@ import pi.vortex.rescuethestray.entities.LearningResource;
 
 @Repository
 public interface ILearningResourceRepo extends JpaRepository<LearningResource,Long> {
+
 }
