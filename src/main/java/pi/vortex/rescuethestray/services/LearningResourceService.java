@@ -1,12 +1,17 @@
 package pi.vortex.rescuethestray.services;
 
+import ch.qos.logback.core.joran.spi.Interpreter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import pi.vortex.rescuethestray.entities.LearningResource;
 import pi.vortex.rescuethestray.entities.TypeResource;
 import pi.vortex.rescuethestray.interfaces.ILearningResourceService;
 import pi.vortex.rescuethestray.repositories.ILearningResourceRepo;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -51,4 +56,7 @@ public class LearningResourceService implements ILearningResourceService {
                 .map(LearningResource::getType_learningr)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
     }
+
+
+
 }
