@@ -1,17 +1,19 @@
 package pi.vortex.rescuethestray.services;
 
-import ch.qos.logback.core.joran.spi.Interpreter;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import pi.vortex.rescuethestray.entities.LearningResource;
+import pi.vortex.rescuethestray.entities.TypeLRInterest;
 import pi.vortex.rescuethestray.entities.TypeResource;
+import pi.vortex.rescuethestray.entities.User;
 import pi.vortex.rescuethestray.interfaces.ILearningResourceService;
 import pi.vortex.rescuethestray.repositories.ILearningResourceRepo;
+import pi.vortex.rescuethestray.repositories.UserRepository;
 
-import java.util.HashMap;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -24,6 +26,13 @@ public class LearningResourceService implements ILearningResourceService {
     @Autowired
     ILearningResourceRepo iLearningResourceRepo;
 
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    EmailService emailService;
+
+
     @Override
     public List<LearningResource> retreiveAllLearningResources() {
         return (List<LearningResource>) iLearningResourceRepo.findAll();
@@ -35,9 +44,11 @@ public class LearningResourceService implements ILearningResourceService {
     }
 
     @Override
-    public LearningResource addLearningResource(LearningResource learningResource)
-    {
-        return iLearningResourceRepo.save(learningResource);
+    public LearningResource addLearningResource(LearningResource learningResource) {
+        iLearningResourceRepo.save(learningResource);
+        sendmail(learningResource);
+        //sendLearningResourceEmails();
+        return learningResource;
     }
 
     @Override
@@ -55,6 +66,46 @@ public class LearningResourceService implements ILearningResourceService {
         return resources.stream()
                 .map(LearningResource::getType_learningr)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+    }
+
+    public Map<TypeLRInterest, Long> statsResourcesByTheme() {
+        List<LearningResource> resources = iLearningResourceRepo.findAll();
+        return resources.stream()
+                .flatMap(resource -> resource.getTheme().stream())
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+    }
+
+
+    //   @Scheduled(fixedRate = 86400000) // run every 24 hours
+    @Scheduled(cron = "0 55 18 * * *") // Runs the task at 6:38 PM every day
+    public void sendLearningResourceEmails() {
+        List<LearningResource> learningResources = iLearningResourceRepo.findAll();
+        LocalDate today = LocalDate.now();
+        for (LearningResource learningResource : learningResources) {
+            LocalDate date = learningResource.getCreationdate_learningr();
+            if (today.compareTo(date) == 0) {
+                sendmail(learningResource);
+            }
+        }
+    }
+
+    public void sendmail(LearningResource lr) {
+
+        List<User> interestedUsers = userRepository.findByInterestsIn(lr.getTheme());
+
+        for (User user : interestedUsers) {
+            String recipientEmail = user.getEmail();
+            String subject = "New learning resource available";
+            String body = "Dear " + user.getFullName() + ",\n\nA new learning resource is available:\n\n" +
+                    "Title: " + lr.getTitle_learningr() + "\n" +
+                    "Description: " + lr.getDesc_learningr() + "\n" +
+                    "Type: " + lr.getType_learningr() + "\n" +
+                    "URL: " + lr.getUrl_learningr() + "\n\n" +
+                    "You might be interested in it, it's about one of your interests "+user.getInterests()+"\n\n"+
+                    "Best regards,\nThe Learning Resources team";
+
+            emailService.sendEmail(recipientEmail, subject, body);
+        }
     }
 
 

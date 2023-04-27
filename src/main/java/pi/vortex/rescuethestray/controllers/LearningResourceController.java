@@ -1,14 +1,16 @@
 package pi.vortex.rescuethestray.controllers;
 
+import com.sun.nio.sctp.NotificationHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pi.vortex.rescuethestray.config.NotificationLRHandler;
 import pi.vortex.rescuethestray.entities.LearningResource;
+import pi.vortex.rescuethestray.entities.TypeLRInterest;
 import pi.vortex.rescuethestray.entities.TypeResource;
 import pi.vortex.rescuethestray.interfaces.ILearningResourceService;
 import pi.vortex.rescuethestray.repositories.ILearningResourceRepo;
+import pi.vortex.rescuethestray.repositories.UserRepository;
 
 import java.io.IOException;
 import java.util.*;
@@ -25,6 +27,11 @@ public class LearningResourceController {
     @Autowired
     private ILearningResourceRepo iLearningResourceRepo;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private NotificationLRHandler notificationHandler;
 
     @GetMapping("/retrieve-all-learning-resources")
     public List<LearningResource> getLearningResources() {
@@ -40,6 +47,15 @@ public class LearningResourceController {
     @PostMapping("/add-learning-resource")
     public LearningResource addLearningResource(@RequestBody LearningResource lr) {
         LearningResource learningResource=iLearningResourceService.addLearningResource(lr);
+
+        // Broadcast a notification to connected clients
+        String message = "A new resource has been created: " + lr.getTitle_learningr()+ "\n Check it out!";
+        try {
+            notificationHandler.broadcastNotification(message);
+        } catch (IOException e) {
+
+        }
+
         return learningResource;
     }
 
@@ -75,7 +91,23 @@ public class LearningResourceController {
     }
 
 
+    @GetMapping("/learning-resource-theme-stats")
+    public ResponseEntity<List<Map<String, Object>>> statsResourcesByTheme() {
+        List<LearningResource> resources = iLearningResourceRepo.findAll();
+        Map<TypeLRInterest, Long> stats = resources.stream()
+                .flatMap(resource -> resource.getTheme().stream())
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
+        List<Map<String, Object>> data = new ArrayList<>();
+        for (TypeLRInterest theme : stats.keySet()) {
+            Map<String, Object> entry = new HashMap<>();
+            entry.put("label", theme.name());
+            entry.put("data", stats.get(theme));
+            data.add(entry);
+        }
+
+        return ResponseEntity.ok().body(data);
+    }
 
 
 

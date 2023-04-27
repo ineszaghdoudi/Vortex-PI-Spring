@@ -5,6 +5,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -38,6 +39,23 @@ public class User {
 				joinColumns = @JoinColumn(name = "user_id"), 
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
+
+
+	// INTEREST
+
+	@ElementCollection(targetClass = TypeLRInterest.class)
+	@Enumerated(EnumType.STRING)
+	private List<TypeLRInterest> interests;
+
+	// getters and setters for interests field
+	public List<TypeLRInterest> getInterests() {
+		return interests;
+	}
+
+	public void setInterests(List<TypeLRInterest> interests) {
+		this.interests = interests;
+	}
+
 
 	public User() {
 	}
