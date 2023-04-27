@@ -10,23 +10,28 @@ import java.time.LocalDate;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "comment")
+@Table(name = "event")
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Comment implements Serializable {
-
+public class Evenement implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long CommentId;
+    Long id_event;
 
-    String Content;
+    String name_event;
 
-    LocalDate date_comment;
+    String object_event;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    Post poste;
+    String place_event;
+
+    LocalDate date_deb_event;
+
+    LocalDate date_end_event;
+
+    // @Enumerated(EnumType.STRING)
+     TypeEvent type_event;
 
 }

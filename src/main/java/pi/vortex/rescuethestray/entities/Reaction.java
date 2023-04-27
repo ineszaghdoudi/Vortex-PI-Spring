@@ -6,27 +6,26 @@ import lombok.experimental.FieldDefaults;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
+
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "comment")
+@Table(name = "reaction")
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Comment implements Serializable {
-
+public class Reaction implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long CommentId;
+    Long ReactionId;
 
-    String Content;
+    @Enumerated(EnumType.STRING)
+    TypeReaction type_reaction;
 
-    LocalDate date_comment;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    Post poste;
-
+    @ManyToOne
+   Post post;
 }
