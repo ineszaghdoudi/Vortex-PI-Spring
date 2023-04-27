@@ -21,4 +21,10 @@ public interface ILearningResourceService {
 
     Map<TypeResource, Long> statsResourcesByType();
 
+    void sendmail(LearningResource lr);
+
+    void sendLearningResourceEmails();
+
+
+
 }
