@@ -19,6 +19,8 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	/*@OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+	List<Donation> donationList;*/
 	@NotBlank
 	@Size(max = 20)
 	private String username;

@@ -5,11 +5,12 @@ import org.springframework.web.bind.annotation.*;
 import pi.vortex.rescuethestray.entities.Compaign;
 import pi.vortex.rescuethestray.interfaces.ICompaignService;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/Compaign")
+//@RequestMapping("/Compaign")
 public class CompaignController {
     ICompaignService compaignService;
 
@@ -32,5 +33,13 @@ public class CompaignController {
     @PutMapping("/update-compaign")
     public Compaign UpdateCompaign(@RequestBody Compaign compaign){
         return compaignService.addOrUpdateCompaign(compaign);
+    }
+    @GetMapping("/compaign-statistics/{id_comp}")
+    public HashMap<String, Double> CompaignStatistics(@PathVariable("id_comp") Long id_compaign) {
+        return compaignService.CompaignStatistics(id_compaign);
+    }
+    @GetMapping("/predictReachingTarget/{idcomp}")
+    public double predictLikelihoodOfReachingTarget(@PathVariable("idcomp") Long compaignId) {
+        return compaignService.predictLikelihoodOfReachingTarget(compaignId);
     }
 }
