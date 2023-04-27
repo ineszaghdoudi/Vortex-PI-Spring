@@ -1,7 +1,9 @@
 package pi.vortex.rescuethestray.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,11 +20,16 @@ import java.time.LocalDate;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Donation implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id_donation;
     long amount_donation;
+
+    @CreationTimestamp
     LocalDate date_donation;
     String desc_donation;
+
+    @ManyToOne
+    User user;
 
     @ManyToOne
     Compaign compaign;
