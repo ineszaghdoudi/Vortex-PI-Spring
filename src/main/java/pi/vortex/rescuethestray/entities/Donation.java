@@ -10,23 +10,20 @@ import java.time.LocalDate;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "comment")
+@Table(name = "donation")
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Comment implements Serializable {
-
+public class Donation implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long CommentId;
+    @GeneratedValue
+    long id_donation;
+    long amount_donation;
+    LocalDate date_donation;
+    String desc_donation;
 
-    String Content;
-
-    LocalDate date_comment;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    Post poste;
-
+    @ManyToOne
+    Compaign compaign;
 }

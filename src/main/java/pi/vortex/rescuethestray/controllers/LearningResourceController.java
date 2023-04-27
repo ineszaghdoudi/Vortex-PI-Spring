@@ -1,6 +1,8 @@
 package pi.vortex.rescuethestray.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pi.vortex.rescuethestray.entities.LearningResource;
@@ -8,9 +10,11 @@ import pi.vortex.rescuethestray.entities.TypeResource;
 import pi.vortex.rescuethestray.interfaces.ILearningResourceService;
 import pi.vortex.rescuethestray.repositories.ILearningResourceRepo;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
 
 @RestController
 public class LearningResourceController {
@@ -69,6 +73,11 @@ public class LearningResourceController {
 
         return ResponseEntity.ok().body(data);
     }
+
+
+
+
+
 
 
 }
