@@ -42,6 +42,23 @@ public class User {
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
+
+	// INTEREST
+
+	@ElementCollection(targetClass = TypeLRInterest.class)
+	@Enumerated(EnumType.STRING)
+	private List<TypeLRInterest> interests;
+
+	// getters and setters for interests field
+	public List<TypeLRInterest> getInterests() {
+		return interests;
+	}
+
+	public void setInterests(List<TypeLRInterest> interests) {
+		this.interests = interests;
+	}
+
+
 	public User() {
 	}
 
