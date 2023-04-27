@@ -32,4 +32,15 @@ public class DonationController {
     public Donation UpdateDonation(@RequestBody Donation donation){
         return donationService.addOrUpdateDonation(donation);
     }
+
+    @PostMapping("/add-donation-assign-compaign/{idcomp}/{id_user}")
+    public Donation addDonationAndAssignToCompaignAndAssignToUser(@RequestBody Donation donation, @PathVariable("idcomp") Long id_comp,
+                                                                  @PathVariable("id_user") Long id_user) {
+        return donationService.addDonationAndAssignToCompaignAndAssignToUser(donation, id_comp,id_user);
+    }
+/*
+    @GetMapping("/monthly-donations/{month}")
+    public List<Double> MonthlyDonationStats(@PathVariable("month") int month) {
+        return donationService.MonthlyDonationStats(month);
+    }*/
 }
