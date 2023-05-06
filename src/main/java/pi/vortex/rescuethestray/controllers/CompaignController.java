@@ -10,7 +10,8 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-//@RequestMapping("/Compaign")
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/Compaign")
 public class CompaignController {
     ICompaignService compaignService;
 

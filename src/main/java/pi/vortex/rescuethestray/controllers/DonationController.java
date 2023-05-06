@@ -1,15 +1,22 @@
 package pi.vortex.rescuethestray.controllers;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pi.vortex.rescuethestray.entities.Compaign;
 import pi.vortex.rescuethestray.entities.Donation;
 import pi.vortex.rescuethestray.interfaces.IDonationService;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/donation")
+@CrossOrigin(origins = "http://localhost:4200")
 public class DonationController {
     IDonationService donationService;
     @GetMapping("/retrieve-all-donations")
@@ -38,7 +45,26 @@ public class DonationController {
                                                                   @PathVariable("id_user") Long id_user) {
         return donationService.addDonationAndAssignToCompaignAndAssignToUser(donation, id_comp,id_user);
     }
-/*
+
+    @Autowired
+
+
+    @GetMapping("/Donations-ByCompaign")
+    public ResponseEntity<List<Map<String, Object>>> GetDonationsByCompaign() {
+        Map<Compaign, Long> stats = donationService.GetDonationsByCompaign();
+
+        List<Map<String, Object>> data = new ArrayList<>();
+        for (Compaign compaign : stats.keySet()) {
+            Map<String, Object> entry = new HashMap<>();
+            entry.put("label", compaign.getTitle_compaign());
+            entry.put("data", stats.get(compaign));
+            data.add(entry);
+        }
+
+        return ResponseEntity.ok().body(data);
+    }
+
+    /*
     @GetMapping("/monthly-donations/{month}")
     public List<Double> MonthlyDonationStats(@PathVariable("month") int month) {
         return donationService.MonthlyDonationStats(month);

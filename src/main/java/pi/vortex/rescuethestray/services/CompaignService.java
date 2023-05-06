@@ -58,15 +58,15 @@ public class CompaignService implements ICompaignService {
         List<Donation> donations = donationRepo.findAllByCompaign(compaign);
 
         double totalDonations = donations.stream().mapToDouble(Donation::getAmount_donation).sum();
-        int numDonations = donations.size();
+        double numDonations = donations.size();
         double avgDonation = totalDonations / numDonations;
-        long numDonors = countDistinctByUserIn (donations);
+        double numDonors = countDistinctByUserIn (donations);
         double percentComplete = (totalDonations / compaign.getTarget_amount_compaign()) * 100.0;
 
         HashMap<String, Double> statisticsMap = new HashMap<>();
         statisticsMap.put("totalDonations", totalDonations);
-        statisticsMap.put("number of Donations", (double) numDonations);
-        statisticsMap.put("Number of Donors",(double) numDonors);
+        statisticsMap.put("numberOfDonations",  numDonations);
+        statisticsMap.put("numberOfDonors", numDonors);
         statisticsMap.put("avgDonation", avgDonation);
         statisticsMap.put("percentComplete", percentComplete);
 
@@ -80,7 +80,7 @@ public class CompaignService implements ICompaignService {
             LocalDate currentDate = LocalDate.now();
             LocalDate endDate = compaign.getEnd_date_compaign();
             long remainingDays = ChronoUnit.DAYS.between(currentDate, endDate);
-            Double totalDonations = CompaignStatistics(compaignId).get("totalDonations");
+            double totalDonations = CompaignStatistics(compaignId).get("totalDonations");
             if (remainingDays <= 0) {
                 return totalDonations >= compaign.getTarget_amount_compaign() ? 100 : 0;
             }
@@ -89,9 +89,9 @@ public class CompaignService implements ICompaignService {
             double dailyRate = remainingAmount / remainingDays;
             double avg = CompaignStatistics(compaignId).get("avgDonation");
             double likelihood = avg*0.8/dailyRate;
-            if (likelihood> 100)
+
+            if (likelihood> 100 || likelihood<0)
                 likelihood=100;
-        // dailyRate * 7 / compaign.getTarget_amount_compaign(); // assuming a week has 7 days
 
             return likelihood;
     }

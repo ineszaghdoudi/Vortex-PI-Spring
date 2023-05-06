@@ -1,6 +1,7 @@
 package pi.vortex.rescuethestray.interfaces;
 
 
+import pi.vortex.rescuethestray.entities.Compaign;
 import pi.vortex.rescuethestray.entities.Donation;
 import pi.vortex.rescuethestray.entities.TypeResource;
 
@@ -10,7 +11,9 @@ import java.util.Map;
 
 public interface IDonationService {
     List<Donation> retrieveAllDonations();
-    Donation retrieveDonation(Long id_donation);
+    Map<Compaign, Long> GetDonationsByCompaign() ;
+
+        Donation retrieveDonation(Long id_donation);
     Donation addOrUpdateDonation(Donation donation);
     void removeDonation(long id_donation);
     Donation addDonationAndAssignToCompaignAndAssignToUser(Donation donation, Long id_comp, Long id_user);

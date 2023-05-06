@@ -11,7 +11,8 @@ import java.util.List;
 @Repository
 public interface DonationRepo extends JpaRepository<Donation,Long> {
     List<Donation> findAllByCompaign(Compaign compaign);
-   // List<Donation> findByDate_donationGreaterThanAndDate_donationLessThan(LocalDate startDate,LocalDate endDate);
+
+    // List<Donation> findByDate_donationGreaterThanAndDate_donationLessThan(LocalDate startDate,LocalDate endDate);
    // Long countDistinctByUserIn(List<Donation> donations);
 
 }
