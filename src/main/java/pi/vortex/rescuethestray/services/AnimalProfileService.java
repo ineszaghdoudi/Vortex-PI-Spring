@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import pi.vortex.rescuethestray.entities.AnimalProfile;
 import pi.vortex.rescuethestray.interfaces.IAnimalProfileService;
 import pi.vortex.rescuethestray.repositories.AnimalProfileRepo;
-import sun.management.snmp.jvmmib.JVM_MANAGEMENT_MIBOidTable;
 
 import java.util.List;
 import java.util.Optional;
