@@ -35,9 +35,8 @@ public class LearningResource implements Serializable {
 
     private String url_learningr;
 
-    @ElementCollection(targetClass = TypeLRInterest.class)
     @Enumerated(EnumType.STRING)
-    private List<TypeLRInterest> theme;
+    private TypeLRInterest theme;
 
     @CreationTimestamp
     private LocalDate creationdate_learningr;

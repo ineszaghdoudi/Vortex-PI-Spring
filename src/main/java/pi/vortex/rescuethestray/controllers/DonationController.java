@@ -7,40 +7,41 @@ import pi.vortex.rescuethestray.interfaces.IDonationService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/donation")
 public class DonationController {
     IDonationService donationService;
+
     @GetMapping("/retrieve-all-donations")
-    public List<Donation> RetrieveAllDonation(){
+    public List<Donation> RetrieveAllDonation() {
         return donationService.retrieveAllDonations();
     }
+
     @GetMapping("/retrieve-all-donations/{id_don}")
-    public Donation retrieveDonation(@PathVariable("id_don")long id_donation){
+    public Donation retrieveDonation(@PathVariable("id_don") long id_donation) {
         return donationService.retrieveDonation(id_donation);
     }
+
     @DeleteMapping("/remove-donation/{id_don}")
-    public void deleteDonation(@PathVariable("id_don")long id_donation){
+    public void deleteDonation(@PathVariable("id_don") long id_donation) {
         donationService.removeDonation(id_donation);
     }
+
     @PostMapping("/add-donation")
-    public Donation addDonation(@RequestBody Donation donation){
+    public Donation addDonation(@RequestBody Donation donation) {
         return donationService.addOrUpdateDonation(donation);
     }
+
     @PutMapping("/update-donation")
-    public Donation UpdateDonation(@RequestBody Donation donation){
+    public Donation UpdateDonation(@RequestBody Donation donation) {
         return donationService.addOrUpdateDonation(donation);
     }
 
     @PostMapping("/add-donation-assign-compaign/{idcomp}/{id_user}")
     public Donation addDonationAndAssignToCompaignAndAssignToUser(@RequestBody Donation donation, @PathVariable("idcomp") Long id_comp,
                                                                   @PathVariable("id_user") Long id_user) {
-        return donationService.addDonationAndAssignToCompaignAndAssignToUser(donation, id_comp,id_user);
+        return donationService.addDonationAndAssignToCompaignAndAssignToUser(donation, id_comp, id_user);
     }
-/*
-    @GetMapping("/monthly-donations/{month}")
-    public List<Double> MonthlyDonationStats(@PathVariable("month") int month) {
-        return donationService.MonthlyDonationStats(month);
-    }*/
 }
