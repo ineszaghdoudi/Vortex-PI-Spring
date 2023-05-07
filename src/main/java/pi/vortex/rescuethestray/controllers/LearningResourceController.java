@@ -17,7 +17,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class LearningResourceController {
 
@@ -94,8 +94,9 @@ public class LearningResourceController {
     @GetMapping("/learning-resource-theme-stats")
     public ResponseEntity<List<Map<String, Object>>> statsResourcesByTheme() {
         List<LearningResource> resources = iLearningResourceRepo.findAll();
+
         Map<TypeLRInterest, Long> stats = resources.stream()
-                .flatMap(resource -> resource.getTheme().stream())
+                .map(LearningResource::getTheme)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
         List<Map<String, Object>> data = new ArrayList<>();
@@ -108,6 +109,7 @@ public class LearningResourceController {
 
         return ResponseEntity.ok().body(data);
     }
+
 
 
 

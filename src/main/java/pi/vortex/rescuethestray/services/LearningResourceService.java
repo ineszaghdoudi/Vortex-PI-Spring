@@ -14,6 +14,7 @@ import pi.vortex.rescuethestray.repositories.UserRepository;
 
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -46,8 +47,7 @@ public class LearningResourceService implements ILearningResourceService {
     @Override
     public LearningResource addLearningResource(LearningResource learningResource) {
         iLearningResourceRepo.save(learningResource);
-        sendmail(learningResource);
-        //sendLearningResourceEmails();
+       // sendmail(learningResource);
         return learningResource;
     }
 
@@ -71,7 +71,7 @@ public class LearningResourceService implements ILearningResourceService {
     public Map<TypeLRInterest, Long> statsResourcesByTheme() {
         List<LearningResource> resources = iLearningResourceRepo.findAll();
         return resources.stream()
-                .flatMap(resource -> resource.getTheme().stream())
+                .map(LearningResource::getTheme)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
     }
 
@@ -91,7 +91,7 @@ public class LearningResourceService implements ILearningResourceService {
 
     public void sendmail(LearningResource lr) {
 
-        List<User> interestedUsers = userRepository.findByInterestsIn(lr.getTheme());
+        List<User> interestedUsers = userRepository.findByInterestsIn(Collections.singletonList(lr.getTheme()));
 
         for (User user : interestedUsers) {
             String recipientEmail = user.getEmail();

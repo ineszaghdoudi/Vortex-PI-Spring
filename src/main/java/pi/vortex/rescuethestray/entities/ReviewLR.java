@@ -20,7 +20,7 @@ public class ReviewLR {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int rating;
+    private float rating;
 
     private String comment;
 

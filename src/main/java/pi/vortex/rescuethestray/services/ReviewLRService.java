@@ -28,9 +28,9 @@ public class ReviewLRService {
         if (reviews.isEmpty()) {
             return 0.0;
         } else {
-            double sum = reviews.stream().mapToInt(ReviewLR::getRating).sum();
+            double sum = reviews.stream().mapToDouble(ReviewLR::getRating).sum();
             double averageRating = sum / reviews.size();
-            return Math.round(averageRating * 10) / 10.0; // round to 1 decimal place
+            return Math.round(averageRating * 5) / 5.0; // round to 1 decimal place
         }
     }
 }
