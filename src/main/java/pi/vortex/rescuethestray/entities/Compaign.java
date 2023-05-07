@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Entity
 @NoArgsConstructor
@@ -31,7 +32,9 @@ public class Compaign implements Serializable {
     LocalDate end_date_compaign;
 
 
-    //@OneToMany(cascade = CascadeType.ALL,mappedBy = "compaign")
-    //List<Donation> LDonations;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "compaign")
+    List<Donation> LDonations;
+
 
 }
