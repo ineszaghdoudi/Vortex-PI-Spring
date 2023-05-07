@@ -11,6 +11,9 @@ import pi.vortex.rescuethestray.repositories.DonationRepo;
 import pi.vortex.rescuethestray.repositories.UserRepository;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class DonationService implements IDonationService {
@@ -28,6 +31,16 @@ public class DonationService implements IDonationService {
     public List<Donation> retrieveAllDonations(){
         return donationRepo.findAll();
     }
+
+    @Override
+    public Map<Compaign, Long> GetDonationsByCompaign() {
+            List<Donation> donations = donationRepo.findAll();
+            return donations.stream()
+                    .map(Donation::getCompaign)
+                    .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+    }
+
 
     @Override
     public Donation retrieveDonation(Long id_donation){
@@ -48,8 +61,9 @@ public class DonationService implements IDonationService {
         User user = userRepository.findById(id_user).orElse(null);
         donation.setCompaign(compaign);
         donation.setUser(user);
+        donation.setAmount_donation(donation.getAmount_donation());
         donationRepo.save(donation);
-        succeedDonation(donation.getId_donation());
+        //succeedDonation(donation.getId_donation());
         return donation;
     }
 

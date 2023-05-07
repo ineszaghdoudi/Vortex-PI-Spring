@@ -1,6 +1,5 @@
 package pi.vortex.rescuethestray.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
@@ -31,6 +30,6 @@ public class Donation implements Serializable {
     @ManyToOne
     User user;
 
-    @ManyToOne
+    @ManyToOne()
     Compaign compaign;
 }

@@ -47,7 +47,7 @@ public class LearningResourceService implements ILearningResourceService {
     @Override
     public LearningResource addLearningResource(LearningResource learningResource) {
         iLearningResourceRepo.save(learningResource);
-       // sendmail(learningResource);
+        //sendmail(learningResource);
         return learningResource;
     }
 
