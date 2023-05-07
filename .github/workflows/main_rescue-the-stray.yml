@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'rescue-the-stray'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_85620E4EB1F940FE81C06ED77E21AE16 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5D006F0817C6445FA253191A1E99131C }}
           package: '*.jar'
