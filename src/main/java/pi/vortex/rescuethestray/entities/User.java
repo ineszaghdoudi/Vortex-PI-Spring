@@ -4,6 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,10 +36,11 @@ public class User {
 	@Size(max = 120)
 	private String fullName;
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(	name = "user_roles", 
-				joinColumns = @JoinColumn(name = "user_id"), 
-				inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JoinTable(name = "user_roles",
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
+	private LocalDate registrationDate;
 
 	public User() {
 	}
@@ -53,6 +56,19 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.fullName = fullName;
+	}
+
+	public User(String username, String email) {
+		this.username = username;
+		this.email = email;
+	}
+
+	public User(Long id, String username, String email, String password, LocalDate registrationDate) {
+		this.id = id;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.registrationDate = registrationDate;
 	}
 
 	public Long getId() {
@@ -90,6 +106,10 @@ public class User {
 	public String getFullName() {
 		return fullName;
 	}
+	public LocalDate getregistrationDate() {
+		return registrationDate;
+	}
+
 
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
@@ -102,4 +122,17 @@ public class User {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
+
+  @PrePersist
+	protected void onCreate(){
+		if(registrationDate==null)
+	  {
+		  registrationDate=LocalDate.now();
+	  }
+  }
+  public int getMonthsSinceRegistraion(){
+		LocalDate now =LocalDate.now();
+	  Period period =Period.between(registrationDate,now);
+	  return period.getYears()*12+period.getMonths();
+  }
 }
