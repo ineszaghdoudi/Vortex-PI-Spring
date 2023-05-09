@@ -23,12 +23,7 @@ public class AdoptionApplicationController {
     IAdoptionApplicationService iAdoptionApplicationService;
 
      AdoptionApplicationRepo adoptionApplicationRepo;
-    /*
-    @PostMapping("/addAdoptionApplication")
-    public AdoptionApplication addAdoptionApplication(@RequestBody AdoptionApplication adoptionApplication) {
-        return iAdoptionApplicationService.addAdoptionApplication(adoptionApplication);
-    }
-    */
+
     @GetMapping("/retriveAllAdoptionApplication")
     public List<AdoptionApplication> retriveAllAdoptionApplication() {
         return iAdoptionApplicationService.retriveAllAdoptionApplication();
@@ -102,5 +97,6 @@ public class AdoptionApplicationController {
     public List<AdoptionApplication> getBestAdoptionApplications(@PathVariable("id") Long id_adoptionpost) {
         return iAdoptionApplicationService.getBestAdoptionApplications(id_adoptionpost);
     }
+
 
 }
