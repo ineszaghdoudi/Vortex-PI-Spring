@@ -1,5 +1,6 @@
 package pi.vortex.rescuethestray.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -17,13 +18,14 @@ import java.io.Serializable;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AnimalProfile {
 
+    public enum AnimalSize{
+        BIG,MEDIUM,SMALL
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id_animal;
 
-    @OneToOne(mappedBy = "animalProfile")
-    private AdoptionPost adoptionPost;
 
     String name_animal;
 
@@ -36,7 +38,8 @@ public class AnimalProfile {
 
     String gender_animal;
 
-    String size_animal;
+    @Enumerated(EnumType.STRING)
+    AnimalSize size_animal;
 
     Integer weight_animal;
 
@@ -44,13 +47,29 @@ public class AnimalProfile {
 
     String temperament_animal;
 
-    String medicalNeeds_animal;
+    Boolean isVaccinated;
 
-    String behavioralNeeds_animal;
+    Boolean isTrained;
+
+    Boolean medicalNeeds_animal;
+
+    String medicalNeeds_description;
+
+    Boolean behavioralNeeds_animal;
+
+    String behavioralNeeds_description;
 
     String history_animal;
-
+    @Column(length = 70000)
     String photoUrl_animal;
+    /*
+    @OneToOne(mappedBy = "animalProfile", cascade = CascadeType.ALL)
+    @JsonIgnore
+    AdoptionPost adoptionPost;
+    */
+    @ManyToOne
+    @JsonIgnore
+    User user;
 
 }
 

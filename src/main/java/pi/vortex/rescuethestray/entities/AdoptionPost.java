@@ -1,12 +1,16 @@
 package pi.vortex.rescuethestray.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,24 +30,22 @@ public class AdoptionPost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id_adoptionpost;
 
-    @OneToOne
-    AnimalProfile animalProfile;
-
-    @OneToMany(mappedBy = "adoptionPost", cascade = CascadeType.ALL)
-    List<AdoptionApplication> adoptionApplications = new ArrayList<>();
-
     String description_adoptionpost;
-
-    @ElementCollection
-    List<String> photoUrls_adoptionpost;
+    @Column(length = 70000)
+    String photoUrl_adoptionpost;
 
     @Enumerated(EnumType.STRING)
-    AdoptionStatus status_adoptionpost;
+    AdoptionStatus status_adoptionpost= AdoptionStatus.AVAILABLE;
 
     @CreationTimestamp
-    LocalDateTime createdDate_adoptionpost;
+    LocalDate creationdate_adoptionpost;
 
-    @UpdateTimestamp
-    LocalDateTime modifiedDate_adoptionpost;
+    Long adopter_id;
+
+    LocalDate adoptionDate;
+
+
+    @OneToOne
+    AnimalProfile animalProfile;
 
 }
