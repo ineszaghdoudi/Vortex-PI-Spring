@@ -1,10 +1,14 @@
 package pi.vortex.rescuethestray.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,6 +18,15 @@ import java.util.Set;
 			@UniqueConstraint(columnNames = "email") 
 		})
 public class User {
+
+	/*
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<AdoptionPost> adoptionPosts = new ArrayList<>();
+
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<AdoptionApplication> adoptionApplications = new ArrayList<>();
+	*/
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
