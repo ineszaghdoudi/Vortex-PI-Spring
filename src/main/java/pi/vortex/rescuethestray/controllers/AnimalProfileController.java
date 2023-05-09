@@ -11,9 +11,11 @@ import pi.vortex.rescuethestray.entities.AnimalProfile;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @AllArgsConstructor
 public class AnimalProfileController {
+
     @Autowired
     IAnimalProfileService iAnimalProfileService;
 
@@ -41,4 +43,11 @@ public class AnimalProfileController {
     public void removeAnimalProfile(@PathVariable("id") Long id_animal) {
         iAnimalProfileService.removeAnimalProfile(id_animal);
     }
+/*
+    @PostMapping("/addAnimalProfileAndAssignToUser/{id}")
+    public AnimalProfile addAnimalProfileAndAssignToUser(@RequestBody AnimalProfile animalProfile,@PathVariable("id") Long id) {
+        return iAnimalProfileService.addAnimalProfileAndAssignToUser(animalProfile, id);
+    }
+
+ */
 }

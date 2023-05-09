@@ -16,4 +16,7 @@ public interface IAnimalProfileService {
     AnimalProfile updateAnimalProfile(AnimalProfile animalProfile);
 
     void removeAnimalProfile(Long id_animal);
+    /*
+    AnimalProfile addAnimalProfileAndAssignToUser(AnimalProfile animalProfile, Long id);
+*/
 }

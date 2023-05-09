@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/donation")
@@ -54,8 +53,6 @@ public class DonationController {
 
 
     @Autowired
-
-
     @GetMapping("/Donations-ByCompaign")
     public ResponseEntity<List<Map<String, Object>>> GetDonationsByCompaign() {
         Map<Compaign, Long> stats = donationService.GetDonationsByCompaign();
