@@ -6,6 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import pi.vortex.rescuethestray.entities.AdoptionPost;
 
+import java.util.List;
+
 @Repository
 public interface AdoptionPostRepo extends JpaRepository<AdoptionPost, Long> {
+
 }

@@ -2,6 +2,7 @@ package pi.vortex.rescuethestray.interfaces;
 
 
 import pi.vortex.rescuethestray.entities.LearningResource;
+import pi.vortex.rescuethestray.entities.TypeLRInterest;
 import pi.vortex.rescuethestray.entities.TypeResource;
 
 import java.util.List;
@@ -20,5 +21,13 @@ public interface ILearningResourceService {
     void removeLearningResource(Long idLearningResource);
 
     Map<TypeResource, Long> statsResourcesByType();
+
+    Map<TypeLRInterest, Long> statsResourcesByTheme();
+
+    void sendmail(LearningResource lr);
+
+    void sendLearningResourceEmails();
+
+
 
 }

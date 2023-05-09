@@ -2,6 +2,7 @@ package pi.vortex.rescuethestray.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import pi.vortex.rescuethestray.entities.TypeLRInterest;
 import pi.vortex.rescuethestray.entities.User;
 
 import java.util.List;
@@ -19,5 +20,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	Boolean existsByUsername(String username);
 
 	Boolean existsByEmail(String email);
+
 	Optional<User> findByEmail(String email);
+
+	List<User> findByInterestsIn(List<TypeLRInterest> interests);
+
 }

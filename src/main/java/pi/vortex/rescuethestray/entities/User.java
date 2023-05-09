@@ -1,12 +1,16 @@
 package pi.vortex.rescuethestray.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,10 +20,21 @@ import java.util.Set;
 			@UniqueConstraint(columnNames = "email") 
 		})
 public class User {
+
+	/*
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<AdoptionPost> adoptionPosts = new ArrayList<>();
+
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<AdoptionApplication> adoptionApplications = new ArrayList<>();
+	*/
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	/*@OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+	List<Donation> donationList;*/
 	@NotBlank
 	@Size(max = 20)
 	private String username;
@@ -41,6 +56,23 @@ public class User {
 			inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 	private LocalDate registrationDate;
+
+
+	// INTEREST
+
+	@ElementCollection(targetClass = TypeLRInterest.class)
+	@Enumerated(EnumType.STRING)
+	private List<TypeLRInterest> interests;
+
+	// getters and setters for interests field
+	public List<TypeLRInterest> getInterests() {
+		return interests;
+	}
+
+	public void setInterests(List<TypeLRInterest> interests) {
+		this.interests = interests;
+	}
+
 
 	public User() {
 	}

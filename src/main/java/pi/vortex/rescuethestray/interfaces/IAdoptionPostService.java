@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IAdoptionPostService {
-
+    /*
     AdoptionPost addAdoptionPost(AdoptionPost adoptionPost);
-
+    */
     List<AdoptionPost> retriveAllAdoptionPost();
 
     Optional<AdoptionPost> retriveAdoptionPost(Long id_adoptionpost);
@@ -16,4 +16,6 @@ public interface IAdoptionPostService {
     AdoptionPost updateAdoptionPost(AdoptionPost adoptionPost);
 
     void removeAdoptionPost(Long id_adoptionpost);
+
+    AdoptionPost addAdoptionPostAndAssignToAnimalProfile(AdoptionPost adoptionPost, Long id_animal);
 }
